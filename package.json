@@ -77,7 +77,7 @@
     "elliptic": "^6.5.4",
     "encodeurl": "^1.0.2",
     "end-of-stream": "^1.4.4",
-    "es5-ext": "^0.10.62",
+    "es5-ext": "^0.10.64",
     "es6-iterator": "^2.0.3",
     "es6-promise": "^4.2.8",
     "es6-symbol": "^3.1.3",
