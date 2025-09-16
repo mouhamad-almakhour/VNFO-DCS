@@ -225,7 +225,7 @@
     "servify": "^0.1.12",
     "setimmediate": "^1.0.5",
     "setprototypeof": "^1.2.0",
-    "sha.js": "^2.4.11",
+    "sha.js": "^2.4.12",
     "side-channel": "^1.0.4",
     "simple-concat": "^1.0.1",
     "simple-get": "^2.8.2",
