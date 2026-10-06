@@ -1,9 +1,10 @@
 # VNFO-DCSC NestJS backend
 
-This is the first backend migration increment. It runs independently of the legacy
-Express application and contains configuration validation and a health module.
-OpenStack adapters, smart contracts, lifecycle APIs, and the frontend will migrate
-in separate feature branches.
+This NestJS/TypeScript application runs independently of the legacy Express app.
+It provides configuration validation, a health module, and versioned marketplace
+route interfaces with validated DTOs and consistent errors. Integration-dependent
+requests return `503` until their implementations are connected. OpenStack
+adapters, smart contracts, authentication, and the frontend have separate branches.
 
 The authentication branch will use Better Auth with its SIWE plugin to preserve
 wallet-based sign-in. See the [SIWE documentation](https://better-auth.com/docs/plugins/siwe)
@@ -12,6 +13,10 @@ Authentication dependencies and routes are not part of this setup increment.
 
 Existing source is kept until its replacement or retirement is validated and
 reviewed; repository cleanup comes after migration.
+
+See the [API reference](API.md) for routes, request/response contracts, and the
+mapping from the original endpoints. This increment does not provision, resize,
+or delete real infrastructure.
 
 ## Setup
 
@@ -64,7 +69,7 @@ Run these inside `apps/backend`:
 | `npm run build` | Compile application sources to `dist` |
 | `npm start` | Run the compiled application; build first |
 | `npm run typecheck` | Check application and test TypeScript without emitting files |
-| `npm test` | Run configuration and HTTP integration tests |
+| `npm test` | Run configuration, validation, routing, and HTTP error tests |
 | `npm run test:watch` | Run tests in watch mode |
 
 For a compiled startup:
@@ -79,10 +84,13 @@ npm start
 ```text
 src/
   main.ts                  # Listener and startup error reporting
-  app.ts                   # Shared application factory and API prefix
+  app.ts                   # Shared application factory
   app.module.ts            # Root module and environment loading
   config/environment.ts    # Typed configuration validation
+  config/configure-application.ts # Shared HTTP setup and validation
+  common/                  # Consistent HTTP exception handling
   health/                  # Health module and controller
+  marketplace/             # Controller, DTOs, service, and typed gateway
 test/                      # Configuration and HTTP integration tests
 ```
 
@@ -94,4 +102,5 @@ this package so installing the backend does not require the legacy dependency tr
 The existing server, routes, contracts, browser files, package files, and Docker
 entrypoint are preserved in [legacy](../../legacy/README.md). Run legacy commands
 from that directory. This scaffold does not repair its known startup or
-integration problems. The next backend branch will migrate API routes.
+integration problems. The next backend branch will introduce the typed OpenStack
+client; authenticated end-to-end workflows remain later migration increments.
