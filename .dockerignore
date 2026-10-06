@@ -1,4 +1,9 @@
 node_modules
+# Migration apps are installed and deployed independently of the legacy image.
+apps/
+**/.env
+**/.env.*
+!**/.env.example
 
 coverage
 coverage.json

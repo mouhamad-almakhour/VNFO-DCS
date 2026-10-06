@@ -1,3 +1,10 @@
+# VNFO-DCSC migration
+
+The NestJS/TypeScript backend foundation is in [apps/backend](apps/backend/README.md).
+It runs independently on port `3001`; install and run it from that directory.
+The root application and the instructions below describe the legacy Express app.
+Frontend setup and API migration will be reviewed in separate branches.
+
 # __Project Name__
 
 This project serves as a Backend server offering APIs for the: 
