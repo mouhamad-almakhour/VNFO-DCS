@@ -1,78 +1,58 @@
-# VNFO-DCSC migration
+# VNFO-DCSC
 
-The NestJS/TypeScript backend foundation is in [apps/backend](apps/backend/README.md).
-It runs independently on port `3001`; install and run it from that directory.
-The root application and the instructions below describe the legacy Express app.
-Frontend setup and API migration will be reviewed in separate branches.
+VNFO-DCSC is an NFV marketplace using dynamically composed smart contracts.
+The existing application is being migrated progressively to a NestJS/TypeScript
+backend and a Vite/React frontend while preserving its workflows.
 
-# __Project Name__
+## Repository structure
 
-This project serves as a Backend server offering APIs for the: 
-- __VNDO-DCS__ 
+```text
+VNFO-DCS/
+├── apps/
+│   └── backend/       # NestJS application
+├── legacy/           # Original application retained during migration
+├── README.md
+└── .gitignore
+```
 
+`apps/frontend`, `packages/contracts`, and CI configuration will be added in their
+own feature branches. The applications currently use independent dependencies;
+there is no root npm package or root start command.
 
-To start the server, Node Package Manager (npm) is required.
-# __Getting Started__
-## __Configuration: .env__
-1. Create the .env file from .env-sample:
+## Backend development
+
+Use Node.js 22.13 or later within the Node.js 22 release line, and npm.
+
 ```bash
-cp .env-sample .env
+cd apps/backend
+npm ci
+cp .env.example .env
+npm run dev
 ```
-2. Fill the .env config file with the proper variables:
- ```bash
-# openstack Veriables
-openstack_url=<your_server_ip>
 
-```
-## __Running Locally__
+The backend listens on `http://127.0.0.1:3001` by default. Its current increment
+provides configuration validation and `GET /api/v1/health`; lifecycle APIs,
+authentication, cloud integration, and the frontend are being migrated separately.
 
-### __Prerequisites__
-- Node.js
-- npm
+See the [backend README](apps/backend/README.md) for configuration, builds, and
+tests.
 
-Follow these steps to run the backend server locally:
+## Original application
 
+The old server, API adapters, browser files, smart contracts, package files, and
+deployment configuration are in [legacy](legacy/README.md). Run its commands from
+`legacy/`; the legacy port remains `3000`.
 
-1. Install the project dependencies:
-   ```bash
-   npm install
-   ```
-2. Set up the environment variables in the .env file.
+Its Compose file, Dockerfile, environment sample, and Makefile moved together so
+their relative paths remain grouped with the application. Keep legacy secrets in
+`legacy/.env`. The new backend reads only `apps/backend/.env`.
 
-3. Start the server:
-   ```bash
-   npm start
-   ```
-4. Access the APIs via the following ports:
-   ```bash
-   - API server: http://localhost:3000
-   ```
+This reorganization preserves the old source; it does not repair its known
+startup and integration defects. Remove legacy components after their migrated
+workflows have been validated and reviewed.
 
-## __Running with Docker__
+## Contribution workflow
 
-### __Prerequisites__
-- Docker
-
-Follow these steps to run the backend server using Docker:
-
-1. Set up the environment variables in the .env file.
-
-2. Run the Docker container:
-   ```bash
-   docker-compose up
-   ```
-3. Verify that the container is running:
-   ```bash
-   docker ps
-   ```
-   You should see the container running in the list.
-4. Access the APIs via the following URLs:
-   ```bash
-   - API server: http://vnfo.localhost/
-  
-   ```
-__Note:__ For production, make sure to replace ` VIRTUAL_HOST: vnfo.localhost` with the domain name of your service in `./docker-compose.yml`. 
-# __Version__
-
-Version: V1.0.0
-
+Use one feature branch for one feature or two closely related changes. Backend
+and frontend work have separate branches. Validate each increment, then open a PR
+into `master` for review before starting the next increment.
