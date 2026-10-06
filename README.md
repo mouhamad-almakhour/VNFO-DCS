@@ -31,8 +31,9 @@ npm run dev
 ```
 
 The backend listens on `http://127.0.0.1:3001` by default. Its current increment
-provides configuration validation and `GET /api/v1/health`; lifecycle APIs,
-authentication, cloud integration, and the frontend are being migrated separately.
+provides configuration validation, `GET /api/v1/health`, and validated marketplace
+route interfaces. Integration-dependent routes currently return `503`;
+authentication, cloud/contract execution, and the frontend have separate branches.
 
 See the [backend README](apps/backend/README.md) for configuration, builds, and
 tests.
