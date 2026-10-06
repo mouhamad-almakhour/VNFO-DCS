@@ -27,7 +27,7 @@ npm run dev
 
 The `.env` file is optional: the application uses the defaults below when a
 variable is absent. Existing process environment variables override `.env` values.
-Only `apps/backend/.env` is loaded; the legacy root `.env` is not read.
+Only `apps/backend/.env` is loaded; `legacy/.env` is not read.
 
 | Variable | Default | Accepted values |
 | --- | --- | --- |
@@ -91,6 +91,7 @@ properties. Application builds exclude tests; typechecking includes them. Jest
 uses the same compiler configuration. Dependencies and their lockfile are local to
 this package so installing the backend does not require the legacy dependency tree.
 
-The existing root `npm start`, server, routes, contracts, browser files, and Docker
-entrypoint remain the legacy application. This scaffold does not repair its known
-startup or integration problems. The next backend branch will migrate API routes.
+The existing server, routes, contracts, browser files, package files, and Docker
+entrypoint are preserved in [legacy](../../legacy/README.md). Run legacy commands
+from that directory. This scaffold does not repair its known startup or
+integration problems. The next backend branch will migrate API routes.
